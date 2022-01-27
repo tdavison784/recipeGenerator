@@ -83,12 +83,18 @@ def create_pdf(ingredients, instructions, pdf_name, recipe_name):
     text.setFont("Courier", 12)
     text.setFillColor(colors.black)
     text.textLine("Ingredients:")
+    text.setFont("Courier", 10)
+    text.setFillColor(colors.black)
+
     for x in ingredients:
         text.textLine(x.text)
 
-    text.setFont("Courier", 8)
+    text.setFont("Courier", 12)
     text.setFillColor(colors.black)
     text.textLine("Instructions:")
+    text.setFont("Courier", 10)
+
+    text.setFillColor(colors.black)
     for y in instructions:
         text.textLine(y)
     pdf.drawText(text)
