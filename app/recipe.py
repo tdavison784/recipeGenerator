@@ -1,5 +1,4 @@
 import logging
-import shutil
 import requests
 from bs4 import BeautifulSoup
 from reportlab.pdfgen import canvas
@@ -42,7 +41,7 @@ def get_instructions(html):
 
     soup = BeautifulSoup(html, "html.parser")
     data = soup.find("div", attrs={"class": "wprm-recipe-instruction-group"})
-    print(data.text)
+
     return data.text.split(".")
 
 
@@ -61,7 +60,10 @@ def download_picture(html):
     url = _get_picture_url(html)
     resp = requests.get(url, stream=True)
     with open("img.png", "wb") as out_file:
-        shutil.copyfileobj(resp.raw, out_file)
+        for chunk in resp.iter_content():
+            out_file.write(chunk)
+    out_file.close()
+
     del resp
 
 
@@ -93,10 +95,3 @@ def create_pdf(ingredients, instructions, pdf_name, recipe_name):
     pdf.drawInlineImage(image, 3, 10)
 
     pdf.save()
-
-
-
-
-
-
-
