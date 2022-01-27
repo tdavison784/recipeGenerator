@@ -96,7 +96,13 @@ def create_pdf(ingredients, instructions, pdf_name, recipe_name):
 
     text.setFillColor(colors.black)
     for y in instructions:
-        text.textLine(y)
+        if len(y) > 100:
+            begin = y[:90]
+            end = y[90:]
+            text.textLine(begin)
+            text.textLine(end)
+        else:
+            text.textLine(y)
     pdf.drawText(text)
     pdf.drawInlineImage(image, 3, 10)
 
