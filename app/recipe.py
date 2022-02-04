@@ -1,4 +1,5 @@
 import logging
+import re
 import requests
 from bs4 import BeautifulSoup
 from reportlab.pdfgen import canvas
@@ -25,9 +26,10 @@ def get_recipe_name(html) -> str:
 
     :param html: html str to be passed into bs4
     :return str"""
-
+    class_recipe_name = re.search("wprm-recipe-name", html)
+    print(class_recipe_name.group())
     soup = BeautifulSoup(html, "html.parser")
-    data = soup.find("h2", attrs={"class": "wprm-recipe-name"})
+    data = soup.find("h2", attrs={"class": class_recipe_name.group()})
     if data is None:
         data = soup.find("h2", attrs={"class": "wprm-recipe-name wprm-block-text-bold"})
 
