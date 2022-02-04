@@ -41,9 +41,12 @@ def get_ingredients(html):
     and returns ingredients list.
     :param html: html string to be parsed by bs4
     :return bs4.element.Tag"""
-
+    class_ingredients_name = re.search("wprm-recipe-ingredients", html)
+    if class_ingredients_name is None:
+        class_ingredients_name = re.search("ingredient-text", html)
+    print(class_ingredients_name)
     soup = BeautifulSoup(html, "html.parser")
-    data = soup.find('ul', attrs={'class': "wprm-recipe-ingredients"})
+    data = soup.find('ul', attrs={'class': class_ingredients_name.group()})
 
     return data
 
